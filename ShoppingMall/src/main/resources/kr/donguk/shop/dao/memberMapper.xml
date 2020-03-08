@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.donguk.shop.dao.MemberDAO">
+	<insert id="join" parameterType="MemberVO">
+		<![CDATA[
+			insert into UKshop_member 
+				(member_userid,member_password,member_name,member_phone,member_regdate,member_grade,member_zipcode,member_addr1,member_addr2)
+			values
+				(#{member_userid},hex(AES_ENCRYPT(#{member_password},SHA2('key',256))),#{member_name},#{member_phone},now(),0,#{member_zipcode},#{member_addr1},#{member_addr2})
+		]]>
+	</insert>
+	
+	<select id="idCheck" parameterType="java.util.HashMap" resultType="int">
+		select count(*) from UKshop_member where member_userid=#{member_userid}
+	</select>
+	<select id="selectById" parameterType="java.util.HashMap" resultType="MemberVO">
+		select * from UKshop_member where member_userid=#{member_userid}
+	</select>
+	<select id="login" parameterType="java.util.HashMap" resultType="int">
+		<![CDATA[
+			select count(*) from UKshop_member where member_userid=#{member_userid} and member_password=#{member_password};
+		]]>
+	</select>
+	<select id="passwordEncryption" parameterType="java.util.HashMap" resultType="String">
+		<![CDATA[
+			select hex(AES_ENCRYPT(#{member_password},SHA2('key',256)));
+		]]>
+	</select>
+</mapper>

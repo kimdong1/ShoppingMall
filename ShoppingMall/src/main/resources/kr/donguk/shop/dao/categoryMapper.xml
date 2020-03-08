@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.donguk.shop.dao.CategoryDAO">
+	<insert id="regist" parameterType="java.util.HashMap">
+		<![CDATA[
+			insert into UKshop_category (category_lev,category_grp,category_title) 
+			values (#{category_lev},#{category_grp},#{category_title})
+		]]>
+	</insert>
+	<select id="selectMaxGrp" resultType="int">
+		select ifnull(max(category_grp),0) from UKshop_category
+	</select>
+	<select id="selectAll" resultType="CategoryVO">
+		select * from UKshop_category order by category_grp desc,category_lev
+	</select>
+	<delete id="deleteCategory" parameterType="java.util.HashMap">
+		delete from UKshop_category where category_idx=#{category_idx}
+	</delete>
+	<insert id="childRegist" parameterType="java.util.HashMap">
+		<![CDATA[
+			insert into UKshop_category (category_lev,category_grp,category_title) 
+			values (#{category_lev},#{category_grp},#{category_title})
+		]]>
+	</insert>
+	<select id="selectByGrp" parameterType="java.util.HashMap" resultType="CategoryVO">
+		select * from UKshop_category where category_grp=#{category_grp} and category_lev>0 order by category_grp desc,category_lev
+	</select>
+
+	
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.donguk.shop.dao.ProductFileDAO">
+	<insert id="productFileRegist" parameterType="ProductFileVO">
+		<![CDATA[
+			insert into 
+				UKshop_product_file (product_division,product_smallDivision,product_idx,product_id,product_ofile,product_sfile) 
+			values (#{product_division},#{product_smallDivision},#{product_idx},#{product_id},#{product_ofile},#{product_sfile})
+		]]>
+	</insert>
+	<select id="maxIdx" resultType="String" >
+		<![CDATA[select max(product_idx) from UKshop_product_file]]>
+	</select>
+	
+	<select id="selectListFileByDivision" parameterType="java.util.HashMap" resultType="ProductFileVO">
+		<![CDATA[select * from UKshop_product_file where product_division=#{product_division} order by product_idx desc]]>
+	</select>
+	
+	<select id="selectListFileByProductId" parameterType="java.util.HashMap" resultType="ProductFileVO">
+		<![CDATA[
+			select * from UKshop_product_file 
+				where product_id=#{product_id} 
+		]]>
+	</select>
+	
+</mapper>

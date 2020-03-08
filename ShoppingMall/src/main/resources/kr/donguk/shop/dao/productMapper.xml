@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.donguk.shop.dao.ProductDAO">
+	<insert id="productRegist" parameterType="ProductVO">
+		insert into 
+			UKshop_product (product_division,product_smallDivision,product_id,product_name,product_price,product_content,product_regdate,product_size,product_color) 
+		values (#{product_division},#{product_smallDivision},#{product_id},#{product_name},#{product_price},#{product_content},now(),#{product_size},#{product_color})
+	</insert>
+	
+	<select id="selectListByDivision" parameterType="java.util.HashMap" resultType="ProductVO">
+		<![CDATA[
+			select * from UKshop_product where product_division=#{product_division} order by product_idx desc
+		]]>
+	</select>
+	
+	<select id="selectListByDivisionAndSmallDivision" parameterType="java.util.HashMap" resultType="ProductVO">
+		<![CDATA[
+			select * from UKshop_product 
+				where product_division=#{product_division} and product_smallDivision=#{product_smallDivision} 
+			order by product_idx desc
+		]]>
+	</select>
+	
+	<select id="selectListByProductName" parameterType="java.util.HashMap" resultType="ProductVO">
+		<![CDATA[
+			select * from UKshop_product 
+				where product_name=#{product_name} and product_id=#{product_id} 
+			order by product_idx desc
+		]]>
+	</select>
+	
+</mapper>

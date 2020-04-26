@@ -1,4 +1,4 @@
-package kr.donguk.shop.test;
+package kr.donguk.shop.vo;
 
 public class Test {
 	private int test;
